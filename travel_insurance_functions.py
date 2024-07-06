@@ -376,10 +376,10 @@ def calculate_model_statistics(cm, column="values"):
     from sklearn.metrics import confusion_matrix
 
     # Isolate tallies by category
-    true_positives = cm[0, 0]
-    false_negatives = cm[0, 1]
-    false_positives = cm[1, 0]
-    true_negatives = cm[1, 1]
+    true_positives = cm[1,1]
+    false_negatives = cm[1, 0]
+    false_positives = cm[0, 1]
+    true_negatives = cm[0, 0]
 
     accuracy = (true_positives + true_negatives) / (
         true_positives + true_negatives + false_positives + false_negatives
@@ -437,7 +437,7 @@ def conduct_grid_search_tuning(model, grid,X,Y):
     }
 
     classifier = models[model]
-    grid_search = GridSearchCV(classifier, grid, cv=10)
+    grid_search = GridSearchCV(classifier, grid, cv=10,scoring='roc_auc')
     grid_search.fit(X, Y)
 
     best_params = grid_search.best_params_
